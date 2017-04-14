@@ -10,16 +10,20 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies
+        private ApplicationDbContext _context;
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
         public ActionResult Randome()
         {
-            var movie = new Movie { Name = "Shrek!" };
-            var customers = new List<Customer>
-            {
-                new Customer{Name="Customer1"},
-                new Customer{Name="Customer2"}
-            };
-
+            var movie = _context.Movies.SingleOrDefault();
+            var customers = _context.Customers.ToList();
             var viewModel = new RandomeMovieViewModel
             {
                 Movie = movie,
@@ -30,11 +34,7 @@ namespace Vidly.Controllers
 
         public ActionResult Index()
         {
-            var movies = new List<Movie>
-            {
-                new Movie{Name="Shrek!"},
-                new Movie{Name="King Arthur"}
-            };
+            var movies = _context.Movies.ToList();
             return View(movies);
         }
     }
