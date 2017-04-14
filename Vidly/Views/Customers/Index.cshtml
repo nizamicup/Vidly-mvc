@@ -18,13 +18,16 @@ else
         <th>
             Customers
         </th>
+    <th>
+        MembershipType
+    </th>
     </thead>
     <tbody>
         @foreach (var customer in Model)
         {
             <tr>
              <td>@Html.ActionLink(customer.Name, "Detail","Customers",new {id=customer.Id },null)</td>
-              @*<td><a href="customers/Detail/@customer.Id">@customer.Name</a></td>*@
+             <td>@customer.MembershipType.DiscountRate%</td>
             </tr>
             
         }
